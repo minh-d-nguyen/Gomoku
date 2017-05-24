@@ -6,6 +6,7 @@ using namespace std;
 gomokuBoard::gomokuBoard()
 {	
 	size = 15;
+	isEmpty = true;
 	board = new int[size][size];
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
@@ -17,6 +18,7 @@ gomokuBoard::gomokuBoard()
 gomokuBoard::gomokuBoard(unsigned s)
 {	
 	size = s;
+	isEmpty = true;
 	board = new int[size][size];
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
@@ -31,15 +33,109 @@ gomokuBoard::~gomokuBoard()
 }
 
 // Place a new piece on the board after a move
-void place(int playerNum, unsigned row, unsigned col)
+void gomokuBoard::place(int playerNum, unsigned row, unsigned col)
 {
-	if (row >= size || col >= size || (playerNum != 1 && playerNum != -1))
+	if (row >= size || col >= size || (playerNum != 1 && playerNum != -1)) {
+		cout << "Error!" << endl;
 		return;
+	}
 
-	board[row*size + col] = playerNum;
+	board[row][col] = playerNum;
 }
 
-int checkWin()
+// Check if any player has won the match, return 1 or -1 for player 1 or 2
+// Return 0 if game is not over
+int gomokuBoard::checkWin()
 {
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			int cellResult = checkCell(i, j);
+			if (cellResult != 0) {
+				return cellResult;
+			}
+		}
+	}
 
+	return 0;
+}
+
+// Check if there is a winning pattern from a certain cell
+// Return 1 or -1 for player 1 or 2 if someone has won
+// Return 0 if not
+int gomokuBoard::checkCell(unsigned row, unsigned col) {
+	// Check the row
+	if (col <= size - 5) {
+		if (board[row][col + 1] == board[row][col] &&
+			board[row][col + 2] == board[row][col] &&
+			board[row][col + 3] == board[row][col] &&
+			board[row][col + 4] == board[row][col]) {
+			return board[row][col];
+		}
+	}
+
+	// Check the column
+	if (row <= size - 5) {
+		if (board[row + 1][col] == board[row][col] &&
+			board[row + 2][col] == board[row][col] &&
+			board[row + 3][col] == board[row][col] &&
+			board[row + 4][col] == board[row][col]) {
+			return board[row][col];
+		}
+	}
+
+	// Check the diagonal
+	if (row <= size - 5 && col <= size - 5) {
+		if (board[row + 1][col + 1] == board[row][col] &&
+			board[row + 2][col + 2] == board[row][col] &&
+			board[row + 3][col + 3] == board[row][col] &&
+			board[row + 4][col + 4] == board[row][col]) {
+			return board[row][col];
+		}
+	}
+}
+
+unsigned gomokuBoard::getSize() 
+{
+	return size;
+}
+
+void gomokuBoard::printBoard()
+{
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (board[i][j] == 0) {
+				cout << " ";
+			} else if (board[i][j] == -1) {
+				cout << "x";
+			} else {
+				cout << "o";
+			}
+		}
+		cout << endl;
+	}
+}
+
+void gomokuBoard::setEmpty(bool newVal)
+{
+	isEmpty = newVal;
+}
+
+bool gomokuBoard::empty()
+{
+	return isEmpty;
+}
+
+unsigned gomokuBoard::getSize()
+{
+	return size;
+}
+
+int gomokuBoard::getCellVal(unsigned row, unsigned col)
+{
+	if (row >= size || col >= size) {
+		cout << "Out of bound" << endl;
+		return - 1;
+	}
+
+	return board[row][col];
 }
