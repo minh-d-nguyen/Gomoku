@@ -56,8 +56,8 @@ unsigned gomokuAI::checkDefense(int playerNum, unsigned row, unsigned col)
 	unsigned defThree = 40;
 	unsigned defThreeBonus = 70;
 	unsigned defFour = 200;
-	unsigned defMid = 10;
-	unsigned defMidBonus = 40;
+	unsigned defMid = 25;
+	unsigned defMidBonus = 25;
 	unsigned defFourMid = 60;
 	unsigned defFourMidBonus = 70;
 
@@ -303,22 +303,217 @@ unsigned gomokuAI::checkDefense(int playerNum, unsigned row, unsigned col)
 			board.getCellVal(row + 1, col + 1) == oppNum) {
 			if (col > 1 && row > 1 && board.getCellVal(row - 2, col - 2) == 0) {
 				currScore += defMid;
-				if (col < size - 2 && board.getCellVal(row, col + 2) == 0) {
+				if (col < size - 2 && row < size - 2 && board.getCellVal(row + 2, col + 2) == 0) {
 					currScore += defMidBonus;
 				}
 			}
 		}
 
-		if (board.getCellVal(row, col - 1) == oppNum && 
-			board.getCellVal(row, col + 1) == oppNum) {
-			if (col > 1 && board.getCellVal(row, col - 2) == 0) {
+		if (board.getCellVal(row - 1, col + 1) == oppNum && 
+			board.getCellVal(row + 1, col - 1) == oppNum) {
+			if (col > 1 && row < size - 2 && board.getCellVal(row + 2, col - 2) == 0) {
 				currScore += defMid;
-				if (col < size - 2 && board.getCellVal(row, col + 2) == 0) {
+				if (col < size - 2 && row > 1 && board.getCellVal(row - 2, col + 2) == 0) {
 					currScore += defMidBonus;
 				}
 			}
 		}
 	}
+
+	// Defense Mid 4
+	if (row > 0 && row < size - 2) {
+		if (board.getCellVal(row - 1, col) == oppNum && 
+			board.getCellVal(row + 1, col) == oppNum &&
+			board.getCellVal(row + 2, col) == oppNum) {
+			if (row > 1 && board.getCellVal(row - 2, col) != playerNum) {
+				currScore += defFourMid;
+				if (row < size - 3 && board.getCellVal(row + 3, col) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+
+			else if (row < size - 3 && board.getCellVal(row + 3, col) != playerNum) {
+				currScore += defFourMid;
+				if (row > 1 && board.getCellVal(row - 2, col) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (row > 1 && row < size - 1) {
+		if (board.getCellVal(row - 1, col) == oppNum && 
+			board.getCellVal(row + 1, col) == oppNum &&
+			board.getCellVal(row - 2, col) == oppNum) {
+			if (row < size - 2 && board.getCellVal(row + 2, col) != playerNum) {
+				currScore += defFourMid;
+				if (row > 2 && board.getCellVal(row - 3, col) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+
+			else if (row > 2 && board.getCellVal(row - 3, col) != playerNum) {
+				currScore += defFourMid;
+				if (row < size - 2 && board.getCellVal(row + 2, col) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (row > 0 && row < size - 2) {
+		if (board.getCellVal(row - 1, col) == oppNum && 
+			board.getCellVal(row + 1, col) == oppNum &&
+			board.getCellVal(row + 2, col) == oppNum) {
+			if (row > 1 && board.getCellVal(row - 2, col) != playerNum) {
+				currScore += defFourMid;
+				if (row < size - 3 && board.getCellVal(row + 3, col) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+
+			else if (row < size - 3 && board.getCellVal(row + 3, col) != playerNum) {
+				currScore += defFourMid;
+				if (row > 1 && board.getCellVal(row - 2, col) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 1 && col < size - 1) {
+		if (board.getCellVal(row, col - 1) == oppNum && 
+			board.getCellVal(row + 1, col + 1) == oppNum &&
+			board.getCellVal(row - 2, col - 2) == oppNum) {
+			if (col < size - 2 && board.getCellVal(row, col + 2) != playerNum) {
+				currScore += defFourMid;
+				if (col > 2 && board.getCellVal(row, col - 3) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+
+			else if (col > 2 && board.getCellVal(row, col - 3) != playerNum) {
+				currScore += defFourMid;
+				if (col < size - 2 && board.getCellVal(row, col + 2) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 0 && col < size - 2) {
+		if (board.getCellVal(row, col - 1) == oppNum && 
+			board.getCellVal(row, col + 1) == oppNum &&
+			board.getCellVal(row, col + 2) == oppNum) {
+			if (col > 1 && board.getCellVal(row, col - 2) != playerNum) {
+				currScore += defFourMid;
+				if (col < size - 3 && board.getCellVal(row, col + 3) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+
+			else if (col < size - 3 && board.getCellVal(row, col + 3) != playerNum) {
+				currScore += defFourMid;
+				if (col > 1 && board.getCellVal(row, col - 2) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 0 && row > 0 && col < size - 2 && row < size - 2) {
+		if (board.getCellVal(row - 1, col - 1) == oppNum && 
+			board.getCellVal(row + 1, col + 1) == oppNum &&
+			board.getCellVal(row + 2, col + 2) == oppNum) {
+			if (col > 1 && row > 1 && board.getCellVal(row - 2, col - 2) != playerNum) {
+				currScore += defFourMid;
+				if (col < size - 3 && row < size - 3 && 
+					board.getCellVal(row + 3, col + 3) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+
+			else if (col < size - 3 && row < size - 3 && 
+					 board.getCellVal(row + 3, col + 3) != playerNum) {
+				currScore += defFourMid;
+				if (col > 1 && row > 1 && board.getCellVal(row - 2, col - 2) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 1 && row > 1 && col < size - 1 && row < size - 1) {
+		if (board.getCellVal(row - 1, col - 1) == oppNum && 
+			board.getCellVal(row + 1, col + 1) == oppNum &&
+			board.getCellVal(row - 2, col - 2) == oppNum) {
+			if (col > 2 && row > 2 && board.getCellVal(row - 3, col - 3) != playerNum) {
+				currScore += defFourMid;
+				if (col < size - 2 && row < size - 2 && 
+					board.getCellVal(row + 2, col + 2) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+
+			else if (col < size - 2 && row < size - 2 && 
+					 board.getCellVal(row + 2, col + 2) != playerNum) {
+				currScore += defFourMid;
+				if (col > 2 && row > 2 && board.getCellVal(row - 3, col - 3) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 1 && row > 0 && col < size - 1 && row < size - 2) {
+		if (board.getCellVal(row - 1, col + 1) == oppNum && 
+			board.getCellVal(row + 1, col - 1) == oppNum &&
+			board.getCellVal(row + 2, col - 2) == oppNum) {
+			if (col > 2 && row < size - 3 && 
+				board.getCellVal(row + 3, col - 3) != playerNum) {
+				currScore += defFourMid;
+				if (col < size - 2 && row > 1 && 
+					board.getCellVal(row - 2, col + 2) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+
+			else if (col < size - 2 && row > 1 && 
+					 board.getCellVal(row - 2, col + 2) != playerNum) {
+				currScore += defFourMid;
+				if (col > 2 && row < size - 3 && 
+					board.getCellVal(row + 3, col - 3) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (row > 1 && col > 0 && row < size - 1 && col < size - 2) {
+		if (board.getCellVal(row + 1, col - 1) == oppNum && 
+			board.getCellVal(row - 1, col + 1) == oppNum &&
+			board.getCellVal(row - 2, col + 2) == oppNum) {
+			if (row > 2 && col < size - 3 && 
+				board.getCellVal(row - 3, col + 3) != playerNum) {
+				currScore += defFourMid;
+				if (row < size - 2 && col > 1 && 
+					board.getCellVal(row + 2, col - 2) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+
+			else if (row < size - 2 && col > 1 && 
+					 board.getCellVal(row + 2, col - 2) != playerNum) {
+				currScore += defFourMid;
+				if (row > 2 && col < size - 3 && 
+					board.getCellVal(row - 3, col + 3) != playerNum) {
+					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	return currScore;
 }
 
 unsigned gomokuAI::checkBorder(unsigned row, unsigned col)
