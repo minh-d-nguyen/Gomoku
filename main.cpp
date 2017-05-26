@@ -36,7 +36,7 @@ int main()
 			if (gomokuBot.checkWin() == -1) {
 				cout << "x wins!" << endl;
 			} else {
-				cout << "y wins!" << endl;
+				cout << "o wins!" << endl;
 			}
 			win = true;
 		}
