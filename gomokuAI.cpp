@@ -66,6 +66,7 @@ unsigned gomokuAI::moveScore(int playerNum, unsigned row, unsigned col)
 
 	currScore += checkBorder(row, col);
 	currScore += checkDefense(playerNum, row, col);
+	currScore += checkOffense(playerNum, row, col);
 
 	cellScore[row][col] = currScore;
 
@@ -533,6 +534,475 @@ unsigned gomokuAI::checkDefense(int playerNum, unsigned row, unsigned col)
 				if (row > 2 && col < size - 3 && 
 					board.getCellVal(row - 3, col + 3) != playerNum) {
 					currScore += defFourMidBonus;
+				}
+			}
+		}
+	}
+
+	return currScore;
+}
+
+unsigned gomokuAI::checkOffense(int playerNum, unsigned row, unsigned col)
+{
+	unsigned size = board.getSize();
+	unsigned currScore = 0;
+	unsigned offTwo = 16;
+	unsigned offTwoBonus = 30;
+	unsigned offThree = 36;
+	unsigned offThreeBonus = 90;
+	unsigned offFour = 240;
+	unsigned offMid = 10;
+	unsigned offMidBonus = 30;
+	unsigned offFourMid = 60;
+	unsigned offFourMidBonus = 90;
+
+	int oppNum = -1;
+	if (playerNum == -1) {
+		oppNum = 1;
+	}
+
+	// Offense two
+	if (row > 1) {
+		if (board.getCellVal(row - 1, col) == playerNum && 
+			board.getCellVal(row - 2, col) == playerNum) {
+			currScore += offTwo;
+			if (row > 2 && board.getCellVal(row - 3, col) == 0) {
+				currScore += offTwoBonus;
+			}
+		}
+	}
+
+	if (row < size - 2) {
+		if (board.getCellVal(row + 1, col) == playerNum && 
+			board.getCellVal(row + 2, col) == playerNum) {
+			currScore += offTwo;
+			if (row < size - 3 && board.getCellVal(row + 3, col) == 0) {
+				currScore += offTwoBonus;
+			}
+		}
+	}
+
+	if (col > 1) {
+		if (board.getCellVal(row, col - 1) == playerNum && 
+			board.getCellVal(row, col - 2) == playerNum) {
+			currScore += offTwo;
+			if (col > 2 && board.getCellVal(row, col - 3) == 0) {
+				currScore += offTwoBonus;
+			}
+		}
+	}
+
+	if (col < size - 2) {
+		if (board.getCellVal(row, col + 1) == playerNum && 
+			board.getCellVal(row, col + 2) == playerNum) {
+			currScore += offTwo;
+			if (col < size - 3 && board.getCellVal(row, col + 3) == 0) {
+				currScore += offTwoBonus;
+			}
+		}
+	}
+
+	if (row > 1 && col > 1) {
+		if (board.getCellVal(row - 1, col - 1) == playerNum && 
+			board.getCellVal(row - 2, col - 2) == playerNum) {
+			currScore += offTwo;
+			if (row > 2 && col > 2 && board.getCellVal(row - 3, col - 3) == 0) {
+				currScore += offTwoBonus;
+			}
+		}
+	}
+
+	if (row > 1 && col < size - 2) {
+		if (board.getCellVal(row - 1, col + 1) == playerNum && 
+			board.getCellVal(row - 2, col + 2) == playerNum) {
+			currScore += offTwo;
+			if (row > 2 && col < size - 3 && board.getCellVal(row - 3, col + 3) == 0) {
+				currScore += offTwoBonus;
+			}
+		}
+	}
+
+	if (row < size - 2 && col < size - 2) {
+		if (board.getCellVal(row + 1, col + 1) == playerNum && 
+			board.getCellVal(row + 2, col + 2) == playerNum) {
+			currScore += offTwo;
+			if (row < size - 3 && col < size - 3 && board.getCellVal(row + 3, col + 3) == 0) {
+				currScore += offTwoBonus;
+			}
+		}
+	}
+
+	if (row < size - 2 && col > 1) {
+		if (board.getCellVal(row + 1, col - 1) == playerNum && 
+			board.getCellVal(row + 2, col - 2) == playerNum) {
+			currScore += offTwo;
+			if (row < size - 3 && col > 2 && board.getCellVal(row + 3, col - 3) == 0) {
+				currScore += offTwoBonus;
+			}
+		}
+	}
+
+	// Offense three
+	if (row > 2) {
+		if (board.getCellVal(row - 1, col) == playerNum && 
+			board.getCellVal(row - 2, col) == playerNum &&
+			board.getCellVal(row - 3, col) == playerNum) {
+			currScore += offThree;
+			if (row > 3 && board.getCellVal(row - 4, col) == 0) {
+				currScore += offThreeBonus;
+			}
+		}
+	}
+
+	if (row < size - 3) {
+		if (board.getCellVal(row + 1, col) == playerNum && 
+			board.getCellVal(row + 2, col) == playerNum &&
+			board.getCellVal(row + 3, col) == playerNum) {
+			currScore += offThree;
+			if (row < size - 4 && board.getCellVal(row + 4, col) == 0) {
+				currScore += offThreeBonus;
+			}
+		}
+	}
+	
+	if (col > 2) {
+		if (board.getCellVal(row, col - 1) == playerNum && 
+			board.getCellVal(row, col - 2) == playerNum &&
+			board.getCellVal(row, col - 3) == playerNum) {
+			currScore += offThree;
+			if (col > 3 && board.getCellVal(row, col - 4) == 0) {
+				currScore += offThreeBonus;
+			}
+		}
+	}
+	
+	if (col < size - 3) {
+		if (board.getCellVal(row, col + 1) == playerNum && 
+			board.getCellVal(row, col + 2) == playerNum &&
+			board.getCellVal(row, col + 3) == playerNum) {
+			currScore += offThree;
+			if (col < size - 4 && board.getCellVal(row, col + 4) == 0) {
+				currScore += offThreeBonus;
+			}
+		}
+	}
+
+	if (row > 2 && col > 2) {
+		if (board.getCellVal(row - 1, col - 1) == playerNum && 
+			board.getCellVal(row - 2, col - 2) == playerNum &&
+			board.getCellVal(row - 3, col - 3) == playerNum) {
+			currScore += offThree;
+			if (row > 3 && col > 3 && board.getCellVal(row - 4, col - 4) == 0) {
+				currScore += offThreeBonus;
+			}
+		}
+	}
+
+	if (row > 2 && col < size - 3) {
+		if (board.getCellVal(row - 1, col + 1) == playerNum && 
+			board.getCellVal(row - 2, col + 2) == playerNum &&
+			board.getCellVal(row - 3, col + 3) == playerNum) {
+			currScore += offThree;
+			if (row > 3 && col < size - 4 && board.getCellVal(row - 4, col + 4) == 0) {
+				currScore += offThreeBonus;
+			}
+		}
+	}
+
+	if (row < size - 3 && col > 2) {
+		if (board.getCellVal(row + 1, col - 1) == playerNum && 
+			board.getCellVal(row + 2, col - 2) == playerNum &&
+			board.getCellVal(row + 3, col - 3) == playerNum) {
+			currScore += offThree;
+			if (row < size - 4 && col > 3 && board.getCellVal(row + 4, col - 4) == 0) {
+				currScore += offThreeBonus;
+			}
+		}
+	}
+
+	if (row < size - 3 && col < size - 3) {
+		if (board.getCellVal(row + 1, col + 1) == playerNum && 
+			board.getCellVal(row + 2, col + 2) == playerNum &&
+			board.getCellVal(row + 3, col + 3) == playerNum) {
+			currScore += offThree;
+			if (row < size - 4 && col < size - 4 && board.getCellVal(row + 4, col + 4) == 0) {
+				currScore += offThreeBonus;
+			}
+		}
+	}
+
+	// Offense four
+	if (row > 3) {
+		if (board.getCellVal(row - 1, col) == playerNum && 
+			board.getCellVal(row - 2, col) == playerNum &&
+			board.getCellVal(row - 3, col) == playerNum &&
+			board.getCellVal(row - 4, col) == playerNum) {
+			currScore += offFour;
+		}
+	}
+
+	if (row < size - 4) {
+		if (board.getCellVal(row + 1, col) == playerNum && 
+			board.getCellVal(row + 2, col) == playerNum &&
+			board.getCellVal(row + 3, col) == playerNum &&
+			board.getCellVal(row + 4, col) == playerNum) {
+			currScore += offFour;
+		}
+	}
+
+	if (col > 3) {
+		if (board.getCellVal(row, col - 1) == playerNum && 
+			board.getCellVal(row, col - 2) == playerNum &&
+			board.getCellVal(row, col - 3) == playerNum &&
+			board.getCellVal(row, col - 4) == playerNum) {
+			currScore += offFour;
+		}
+	}
+
+	if (col < size - 4) {
+		if (board.getCellVal(row, col + 1) == playerNum && 
+			board.getCellVal(row, col + 2) == playerNum &&
+			board.getCellVal(row, col + 3) == playerNum &&
+			board.getCellVal(row, col + 4) == playerNum) {
+			currScore += offFour;
+		}
+	}
+
+	// Offense Mid 3
+	if (row < size - 1 && row > 0) {
+		if (board.getCellVal(row - 1, col) == playerNum && 
+			board.getCellVal(row + 1, col) == playerNum) {
+			if (row > 1 && board.getCellVal(row - 2, col) == 0) {
+				currScore += offMid;
+				if (row < size - 2 && board.getCellVal(row + 2, col) == 0) {
+					currScore += offMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col < size - 1 && col > 0) {
+		if (board.getCellVal(row, col - 1) == playerNum && 
+			board.getCellVal(row, col + 1) == playerNum) {
+			if (col > 1 && board.getCellVal(row, col - 2) == 0) {
+				currScore += offMid;
+				if (col < size - 2 && board.getCellVal(row, col + 2) == 0) {
+					currScore += offMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col < size - 1 && col > 0 && row < size - 1 && row > 0) {
+		if (board.getCellVal(row - 1, col - 1) == playerNum && 
+			board.getCellVal(row + 1, col + 1) == playerNum) {
+			if (col > 1 && row > 1 && board.getCellVal(row - 2, col - 2) == 0) {
+				currScore += offMid;
+				if (col < size - 2 && row < size - 2 && board.getCellVal(row + 2, col + 2) == 0) {
+					currScore += offMidBonus;
+				}
+			}
+		}
+
+		if (board.getCellVal(row - 1, col + 1) == playerNum && 
+			board.getCellVal(row + 1, col - 1) == playerNum) {
+			if (col > 1 && row < size - 2 && board.getCellVal(row + 2, col - 2) == 0) {
+				currScore += offMid;
+				if (col < size - 2 && row > 1 && board.getCellVal(row - 2, col + 2) == 0) {
+					currScore += offMidBonus;
+				}
+			}
+		}
+	}
+
+	// Offense Mid 4
+	if (row > 0 && row < size - 2) {
+		if (board.getCellVal(row - 1, col) == playerNum && 
+			board.getCellVal(row + 1, col) == playerNum &&
+			board.getCellVal(row + 2, col) == playerNum) {
+			if (row > 1 && board.getCellVal(row - 2, col) != oppNum) {
+				currScore += offFourMid;
+				if (row < size - 3 && board.getCellVal(row + 3, col) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+
+			else if (row < size - 3 && board.getCellVal(row + 3, col) != oppNum) {
+				currScore += offFourMid;
+				if (row > 1 && board.getCellVal(row - 2, col) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (row > 1 && row < size - 1) {
+		if (board.getCellVal(row - 1, col) == playerNum && 
+			board.getCellVal(row + 1, col) == playerNum &&
+			board.getCellVal(row - 2, col) == playerNum) {
+			if (row < size - 2 && board.getCellVal(row + 2, col) != oppNum) {
+				currScore += offFourMid;
+				if (row > 2 && board.getCellVal(row - 3, col) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+
+			else if (row > 2 && board.getCellVal(row - 3, col) != oppNum) {
+				currScore += offFourMid;
+				if (row < size - 2 && board.getCellVal(row + 2, col) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (row > 0 && row < size - 2) {
+		if (board.getCellVal(row - 1, col) == playerNum && 
+			board.getCellVal(row + 1, col) == playerNum &&
+			board.getCellVal(row + 2, col) == playerNum) {
+			if (row > 1 && board.getCellVal(row - 2, col) != oppNum) {
+				currScore += offFourMid;
+				if (row < size - 3 && board.getCellVal(row + 3, col) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+
+			else if (row < size - 3 && board.getCellVal(row + 3, col) != oppNum) {
+				currScore += offFourMid;
+				if (row > 1 && board.getCellVal(row - 2, col) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 1 && col < size - 1) {
+		if (board.getCellVal(row, col - 1) == playerNum && 
+			board.getCellVal(row + 1, col + 1) == playerNum &&
+			board.getCellVal(row - 2, col - 2) == playerNum) {
+			if (col < size - 2 && board.getCellVal(row, col + 2) != oppNum) {
+				currScore += offFourMid;
+				if (col > 2 && board.getCellVal(row, col - 3) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+
+			else if (col > 2 && board.getCellVal(row, col - 3) != oppNum) {
+				currScore += offFourMid;
+				if (col < size - 2 && board.getCellVal(row, col + 2) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 0 && col < size - 2) {
+		if (board.getCellVal(row, col - 1) == playerNum && 
+			board.getCellVal(row, col + 1) == playerNum &&
+			board.getCellVal(row, col + 2) == playerNum) {
+			if (col > 1 && board.getCellVal(row, col - 2) != oppNum) {
+				currScore += offFourMid;
+				if (col < size - 3 && board.getCellVal(row, col + 3) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+
+			else if (col < size - 3 && board.getCellVal(row, col + 3) != oppNum) {
+				currScore += offFourMid;
+				if (col > 1 && board.getCellVal(row, col - 2) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 0 && row > 0 && col < size - 2 && row < size - 2) {
+		if (board.getCellVal(row - 1, col - 1) == playerNum && 
+			board.getCellVal(row + 1, col + 1) == playerNum &&
+			board.getCellVal(row + 2, col + 2) == playerNum) {
+			if (col > 1 && row > 1 && board.getCellVal(row - 2, col - 2) != oppNum) {
+				currScore += offFourMid;
+				if (col < size - 3 && row < size - 3 && 
+					board.getCellVal(row + 3, col + 3) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+
+			else if (col < size - 3 && row < size - 3 && 
+					 board.getCellVal(row + 3, col + 3) != oppNum) {
+				currScore += offFourMid;
+				if (col > 1 && row > 1 && board.getCellVal(row - 2, col - 2) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 1 && row > 1 && col < size - 1 && row < size - 1) {
+		if (board.getCellVal(row - 1, col - 1) == playerNum && 
+			board.getCellVal(row + 1, col + 1) == playerNum &&
+			board.getCellVal(row - 2, col - 2) == playerNum) {
+			if (col > 2 && row > 2 && board.getCellVal(row - 3, col - 3) != oppNum) {
+				currScore += offFourMid;
+				if (col < size - 2 && row < size - 2 && 
+					board.getCellVal(row + 2, col + 2) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+
+			else if (col < size - 2 && row < size - 2 && 
+					 board.getCellVal(row + 2, col + 2) != oppNum) {
+				currScore += offFourMid;
+				if (col > 2 && row > 2 && board.getCellVal(row - 3, col - 3) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (col > 1 && row > 0 && col < size - 1 && row < size - 2) {
+		if (board.getCellVal(row - 1, col + 1) == playerNum && 
+			board.getCellVal(row + 1, col - 1) == playerNum &&
+			board.getCellVal(row + 2, col - 2) == playerNum) {
+			if (col > 2 && row < size - 3 && 
+				board.getCellVal(row + 3, col - 3) != oppNum) {
+				currScore += offFourMid;
+				if (col < size - 2 && row > 1 && 
+					board.getCellVal(row - 2, col + 2) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+
+			else if (col < size - 2 && row > 1 && 
+					 board.getCellVal(row - 2, col + 2) != oppNum) {
+				currScore += offFourMid;
+				if (col > 2 && row < size - 3 && 
+					board.getCellVal(row + 3, col - 3) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+		}
+	}
+
+	if (row > 1 && col > 0 && row < size - 1 && col < size - 2) {
+		if (board.getCellVal(row + 1, col - 1) == playerNum && 
+			board.getCellVal(row - 1, col + 1) == playerNum &&
+			board.getCellVal(row - 2, col + 2) == playerNum) {
+			if (row > 2 && col < size - 3 && 
+				board.getCellVal(row - 3, col + 3) != oppNum) {
+				currScore += offFourMid;
+				if (row < size - 2 && col > 1 && 
+					board.getCellVal(row + 2, col - 2) != oppNum) {
+					currScore += offFourMidBonus;
+				}
+			}
+
+			else if (row < size - 2 && col > 1 && 
+					 board.getCellVal(row + 2, col - 2) != oppNum) {
+				currScore += offFourMid;
+				if (row > 2 && col < size - 3 && 
+					board.getCellVal(row - 3, col + 3) != oppNum) {
+					currScore += offFourMidBonus;
 				}
 			}
 		}
