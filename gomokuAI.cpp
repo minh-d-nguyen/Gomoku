@@ -3,6 +3,25 @@
 #include "gomokuAI.h"
 using namespace std;
 
+gomokuAI::gomokuAI()
+{
+	cellScore.resize(15);
+	for (unsigned i = 0; i < 15; i++) {
+		cellScore[i].resize(15);
+	}
+
+	for (unsigned i = 0; i < 15; i++) {
+		for (unsigned j = 0; j < 15; j++) {
+			cellScore[i][j] = 0;
+		}
+	}
+}
+
+gomokuAI::~gomokuAI()
+{
+
+}
+
 void gomokuAI::printBoard()
 {
 	board.printBoard();
@@ -22,9 +41,9 @@ void gomokuAI::makeMoveDef(int playerNum)
 		return;
 	}
 
-	for (int i = 0; i < brdSize; i++) {
-		for (int j = 0; j < brdSize; j++) {
-			unsigned currScore = moveScore(i, j);
+	for (unsigned i = 0; i < brdSize; i++) {
+		for (unsigned j = 0; j < brdSize; j++) {
+			unsigned currScore = moveScore(playerNum, i, j);
 			if (currScore > maxScore) {
 				maxScore = currScore;
 				maxRow = i;
@@ -33,23 +52,29 @@ void gomokuAI::makeMoveDef(int playerNum)
 		}
 	}
 
+	cout << maxRow <<  " " << maxCol << " " << maxScore << endl;
 	board.place(playerNum, maxRow, maxCol);
 }
 
 unsigned gomokuAI::moveScore(int playerNum, unsigned row, unsigned col)
 {
 	if (board.getCellVal(row, col) != 0) {
-		return -1;
+		return 0;
 	}
 
 	unsigned currScore = 0;
 
 	currScore += checkBorder(row, col);
 	currScore += checkDefense(playerNum, row, col);
+
+	cellScore[row][col] = currScore;
+
+	return currScore;
 }
 
 unsigned gomokuAI::checkDefense(int playerNum, unsigned row, unsigned col)
 {
+	unsigned size = board.getSize();
 	unsigned currScore = 0;
 	unsigned defTwo = 20;
 	unsigned defTwoBonus = 30;
@@ -519,6 +544,7 @@ unsigned gomokuAI::checkDefense(int playerNum, unsigned row, unsigned col)
 unsigned gomokuAI::checkBorder(unsigned row, unsigned col)
 {
 	unsigned currScore = 0;
+	unsigned size = board.getSize();
 
 	if (row > 0) {
 		if (board.getCellVal(row - 1, col) != 0) {
@@ -569,4 +595,24 @@ unsigned gomokuAI::checkBorder(unsigned row, unsigned col)
 	}
 
 	return currScore;
+}
+
+void gomokuAI::printScore()
+{
+	for (unsigned i = 0; i < cellScore.size(); i++) {
+		for (unsigned j = 0; j < cellScore[i].size(); j++) {
+			cout << cellScore[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+void gomokuAI::playerPlace(int playerNum, unsigned row, unsigned col)
+{
+	board.place(playerNum, row, col);
+}
+
+int gomokuAI::checkWin()
+{
+	return board.checkWin();
 }

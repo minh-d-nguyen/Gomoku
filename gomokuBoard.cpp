@@ -101,6 +101,15 @@ int gomokuBoard::checkCell(unsigned row, unsigned col) {
 		}
 	}
 
+	if (row <= size - 5 && col >= 4) {
+		if (board[row + 1][col - 1] == board[row][col] &&
+			board[row + 2][col - 2] == board[row][col] &&
+			board[row + 3][col - 3] == board[row][col] &&
+			board[row + 4][col - 4] == board[row][col]) {
+			return board[row][col];
+		}
+	}
+
 	return 0;
 }
 
