@@ -2,14 +2,18 @@
 #include "gomokuBoard.h"
 using namespace std;
 
-// Constructor
+// Constructor & Destructor
 gomokuBoard::gomokuBoard()
 {	
 	size = 15;
 	isEmpty = true;
-	board = new int[size][size];
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
+	board.resize(size);
+	for (unsigned i = 0; i < size; i++) {
+		board[i].resize(size);
+	}
+
+	for (unsigned i = 0; i < size; i++) {
+		for (unsigned j = 0; j < size; j++) {
 			board[i][j] = 0;
 		}
 	}
@@ -19,9 +23,13 @@ gomokuBoard::gomokuBoard(unsigned s)
 {	
 	size = s;
 	isEmpty = true;
-	board = new int[size][size];
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
+	board.resize(size);
+	for (unsigned i = 0; i < size; i++) {
+		board[i].resize(size);
+	}
+
+	for (unsigned i = 0; i < size; i++) {
+		for (unsigned j = 0; j < size; j++) {
 			board[i][j] = 0;
 		}
 	}
@@ -29,7 +37,7 @@ gomokuBoard::gomokuBoard(unsigned s)
 
 gomokuBoard::~gomokuBoard()
 {
-	delete[] board;
+
 }
 
 // Place a new piece on the board after a move
@@ -47,8 +55,8 @@ void gomokuBoard::place(int playerNum, unsigned row, unsigned col)
 // Return 0 if game is not over
 int gomokuBoard::checkWin()
 {
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
+	for (unsigned i = 0; i < size; i++) {
+		for (unsigned j = 0; j < size; j++) {
 			int cellResult = checkCell(i, j);
 			if (cellResult != 0) {
 				return cellResult;
@@ -92,19 +100,16 @@ int gomokuBoard::checkCell(unsigned row, unsigned col) {
 			return board[row][col];
 		}
 	}
-}
 
-unsigned gomokuBoard::getSize() 
-{
-	return size;
+	return 0;
 }
 
 void gomokuBoard::printBoard()
 {
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
+	for (unsigned i = 0; i < size; i++) {
+		for (unsigned j = 0; j < size; j++) {
 			if (board[i][j] == 0) {
-				cout << " ";
+				cout << ".";
 			} else if (board[i][j] == -1) {
 				cout << "x";
 			} else {

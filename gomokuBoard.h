@@ -6,7 +6,6 @@ class gomokuBoard {
 public:
 	int checkWin();
 	void place(int playerNum, unsigned row, unsigned col);
-	unsigned gomokuBoard::getSize();
 	void printBoard();
 	bool empty();
 	void setEmpty(bool newVal);
@@ -16,8 +15,8 @@ public:
 	gomokuBoard(unsigned s);
 	~gomokuBoard();
 private:
-	int *board;
+	vector<vector<int> > board;
 	unsigned size;
 	int checkCell(unsigned row, unsigned col);
 	bool isEmpty;
-}
+};

@@ -15,4 +15,4 @@ private:
 	unsigned checkBorder(unsigned row, unsigned col);
 	unsigned checkDefense(int playerNum, unsigned row, unsigned col);
 	unsigned checkOffense(int playerNUm, unsigned row, unsigned col);
-}
+};
