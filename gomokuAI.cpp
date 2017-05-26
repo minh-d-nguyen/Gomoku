@@ -81,7 +81,7 @@ unsigned gomokuAI::checkDefense(int playerNum, unsigned row, unsigned col)
 	unsigned defTwoBonus = 30;
 	unsigned defThree = 40;
 	unsigned defThreeBonus = 70;
-	unsigned defFour = 200;
+	unsigned defFour = 240;
 	unsigned defMid = 25;
 	unsigned defMidBonus = 25;
 	unsigned defFourMid = 60;
@@ -295,6 +295,42 @@ unsigned gomokuAI::checkDefense(int playerNum, unsigned row, unsigned col)
 			board.getCellVal(row, col + 2) == oppNum &&
 			board.getCellVal(row, col + 3) == oppNum &&
 			board.getCellVal(row, col + 4) == oppNum) {
+			currScore += defFour;
+		}
+	}
+
+	if (row < size - 4 && col < size - 4) {
+		if (board.getCellVal(row + 1, col + 1) == oppNum && 
+			board.getCellVal(row + 2, col + 2) == oppNum &&
+			board.getCellVal(row + 3, col + 3) == oppNum &&
+			board.getCellVal(row + 4, col + 4) == oppNum) {
+			currScore += defFour;
+		}
+	}
+
+	if (row > 3 && col < size - 4) {
+		if (board.getCellVal(row - 1, col + 1) == oppNum && 
+			board.getCellVal(row - 2, col + 2) == oppNum &&
+			board.getCellVal(row - 3, col + 3) == oppNum &&
+			board.getCellVal(row - 4, col + 4) == oppNum) {
+			currScore += defFour;
+		}
+	}
+
+	if (row < size - 4 && col > 3) {
+		if (board.getCellVal(row + 1, col - 1) == oppNum && 
+			board.getCellVal(row + 2, col - 2) == oppNum &&
+			board.getCellVal(row + 3, col - 3) == oppNum &&
+			board.getCellVal(row + 4, col - 4) == oppNum) {
+			currScore += defFour;
+		}
+	}
+
+	if (row > 3 && col > 3) {
+		if (board.getCellVal(row - 1, col - 1) == oppNum && 
+			board.getCellVal(row - 2, col - 2) == oppNum &&
+			board.getCellVal(row - 3, col - 3) == oppNum &&
+			board.getCellVal(row - 4, col - 4) == oppNum) {
 			currScore += defFour;
 		}
 	}
@@ -550,7 +586,7 @@ unsigned gomokuAI::checkOffense(int playerNum, unsigned row, unsigned col)
 	unsigned offTwoBonus = 30;
 	unsigned offThree = 36;
 	unsigned offThreeBonus = 90;
-	unsigned offFour = 240;
+	unsigned offFour = 300;
 	unsigned offMid = 10;
 	unsigned offMidBonus = 30;
 	unsigned offFourMid = 60;
@@ -764,6 +800,42 @@ unsigned gomokuAI::checkOffense(int playerNum, unsigned row, unsigned col)
 			board.getCellVal(row, col + 2) == playerNum &&
 			board.getCellVal(row, col + 3) == playerNum &&
 			board.getCellVal(row, col + 4) == playerNum) {
+			currScore += offFour;
+		}
+	}
+
+	if (col < size - 4 && row < size - 4) {
+		if (board.getCellVal(row + 1, col + 1) == playerNum && 
+			board.getCellVal(row + 2, col + 2) == playerNum &&
+			board.getCellVal(row + 3, col + 3) == playerNum &&
+			board.getCellVal(row + 4, col + 4) == playerNum) {
+			currScore += offFour;
+		}
+	}
+
+	if (col > 3 && row > 3) {
+		if (board.getCellVal(row - 1, col - 1) == playerNum && 
+			board.getCellVal(row - 2, col - 2) == playerNum &&
+			board.getCellVal(row - 3, col - 3) == playerNum &&
+			board.getCellVal(row - 4, col - 4) == playerNum) {
+			currScore += offFour;
+		}
+	}
+
+	if (col > 3 && row < size - 4) {
+		if (board.getCellVal(row + 1, col - 1) == playerNum && 
+			board.getCellVal(row + 2, col - 2) == playerNum &&
+			board.getCellVal(row + 3, col - 3) == playerNum &&
+			board.getCellVal(row + 4, col - 4) == playerNum) {
+			currScore += offFour;
+		}
+	}
+
+	if (col < size - 4 && row > 3) {
+		if (board.getCellVal(row - 1, col + 1) == playerNum && 
+			board.getCellVal(row - 2, col + 2) == playerNum &&
+			board.getCellVal(row - 3, col + 3) == playerNum &&
+			board.getCellVal(row - 4, col + 4) == playerNum) {
 			currScore += offFour;
 		}
 	}
