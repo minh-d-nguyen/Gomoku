@@ -2,7 +2,7 @@ from __future__ import print_function
 from gomokuBoard import GomokuBoard
 from gomokuMinimaxAI import gomokuMinimaxAI
 
-board = GomokuBoard(30)
+board = GomokuBoard(6)
 
 x = gomokuMinimaxAI(-1, board)
 y = gomokuMinimaxAI(1, board)
@@ -15,8 +15,6 @@ while (board.check_win() == 0 and not board.is_full()):
 		r, c = raw_input().strip().split(' ')
 		r, c = [int(r), int(c)]
 		board.place(-1, r, c)
-		if board.is_empty:
-			board.is_empty = False
 	else:
 		raw_input()
 		y.make_move()

@@ -4,13 +4,20 @@ class GomokuBoard():
 	def __init__(self, size):
 		self.size = size
 		self.board = []
-		self.is_empty = True
 
 		for i in range(size):
 			column = []
 			for j in range(size):
 				column.append(0)
 			self.board.append(column)
+
+	def is_empty(self):
+		for i in range(self.size):
+			for j in range(self.size):
+				if self.cell_value(i, j) != 0:
+					return False
+
+		return True
 
 	def check_win(self):
 
@@ -89,6 +96,9 @@ class GomokuBoard():
 
 	def place(self, player_num, row, col):
 		self.board[row][col] = player_num
+
+	def erase(self, row, col):
+		self.board[row][col] = 0
 
 	def is_full(self):
 		for i in range(self.size):

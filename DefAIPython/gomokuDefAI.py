@@ -20,15 +20,14 @@ class gomokuDefAI:
 		max_row = -1
 		max_col = -1
 
-		if self.board.is_empty:
+		if self.board.is_empty():
 			mid = self.board.size/2
 			self.board.place(self.player_num, mid, mid)
-			self.board.is_empty = False
 			return
 
 		for i in range(self.board.size):
 			for j in range(self.board.size):
-				current_score = self.move_score(self.player_num, i, j)
+				current_score = self.move_score(i, j)
 				if current_score > max_score:
 					max_score = current_score
 					max_row = i
@@ -37,7 +36,8 @@ class gomokuDefAI:
 		print("Max score: %d Row: %d Col: %d" % (max_score, max_row, max_col))
 		self.board.place(self.player_num, max_row, max_col)
 
-	def move_score(self, player_num, row, col):
+	def move_score(self, row, col):
+		player_num = self.player_num
 		if self.board.cell_value(row, col) != 0:
 			return -1
 
@@ -58,6 +58,8 @@ class gomokuDefAI:
 		size = board.size
 
 		curr_score = 0
+		def_one = 1
+		def_one_bonus = 7
 		def_two = 20
 		def_two_bonus = 30
 		def_three = 40
@@ -71,6 +73,47 @@ class gomokuDefAI:
 		opp_num = -1
 		if player_num == -1:
 			opp_num = 1
+
+		if board.cell_value(row - 1, col) == opp_num:
+			curr_score += def_one
+			if board.cell_value(row - 2, col) == 0:
+				curr_score += def_one_bonus
+
+		if board.cell_value(row + 1, col) == opp_num:
+			curr_score += def_one
+			if board.cell_value(row + 2, col) == 0:
+				curr_score += def_one_bonus
+
+		if board.cell_value(row, col - 1) == opp_num:
+			curr_score += def_one
+			if board.cell_value(row, col - 2) == 0:
+				curr_score += def_one_bonus
+
+		if board.cell_value(row, col + 1) == opp_num:
+			curr_score += def_one
+			if board.cell_value(row, col + 2) == 0:
+				curr_score += def_one_bonus
+
+		if board.cell_value(row - 1, col - 1) == opp_num:
+			curr_score += def_one
+			if board.cell_value(row - 2, col - 2) == 0:
+				curr_score += def_one_bonus
+
+		if board.cell_value(row - 1, col + 1) == opp_num:
+			curr_score += def_one
+			if board.cell_value(row - 2, col + 2) == 0:
+				curr_score += def_one_bonus
+
+		if board.cell_value(row + 1, col - 1) == opp_num:
+			curr_score += def_one
+			if board.cell_value(row + 2, col + 2) == 0:
+				curr_score += def_one_bonus
+
+		if board.cell_value(row + 1, col + 1) == opp_num:
+			curr_score += def_one
+			if board.cell_value(row + 2, col + 2) == 0:
+				curr_score += def_one_bonus
+
 
 		# Defense two
 		if (row > 1):
@@ -434,30 +477,18 @@ class gomokuDefAI:
 		off_one = 4
 		off_one_bonus = 5
 		off_two = 16
-		off_two_bonus = 30
-		off_three = 56
+		off_two_bonus = 26
+		off_three = 46
 		off_three_bonus = 90
 		off_four = 300
-		off_mid = 10
-		off_mid_bonus = 30
+		off_mid = 5
+		off_mid_bonus = 25
 		off_four_mid = 60
 		off_four_mid_bonus = 90
 
 		opp_num = -1
 		if player_num == -1:
 			opp_num = 1
-
-		if (
-			board.cell_value(row - 1, col) == player_num or
-			board.cell_value(row + 1, col) == player_num or
-			board.cell_value(row, col - 1) == player_num or
-			board.cell_value(row, col + 1) == player_num or
-			board.cell_value(row - 1, col - 1) == player_num or
-			board.cell_value(row - 1, col + 1) == player_num or
-			board.cell_value(row + 1, col - 1) == player_num or
-			board.cell_value(row + 1, col + 1) == player_num
-		):
-			curr_score += off_one
 
 		if board.cell_value(row - 1, col) == player_num:
 			curr_score += off_one
