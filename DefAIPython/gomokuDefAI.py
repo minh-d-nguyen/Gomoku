@@ -33,8 +33,8 @@ class gomokuDefAI:
 					max_row = i
 					max_col = j
 
-		print("Max score: %d Row: %d Col: %d" % (max_score, max_row, max_col))
 		self.board.place(self.player_num, max_row, max_col)
+		return max_row, max_col
 
 	def move_score(self, row, col):
 		player_num = self.player_num
