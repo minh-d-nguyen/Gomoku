@@ -79,12 +79,6 @@ class GomokuBoard():
 					print('o', end='')
 			print('\n', end='')
 
-	def empty(self):
-		return self.is_empty
-
-	def set_empty(self, empty):
-		self.is_empty = empty
-
 	def get_size(self):
 		return self.size
 

@@ -40,8 +40,6 @@ class gomokuMinimaxAI:
 
 	def minimax(self, player_num, row, col, is_maximizing):
 		self.board.place(player_num, row, col)
-		print('\n')
-		self.board.print_board()
 		if self.board.check_win() == self.player_num:
 			self.board.erase(row, col)
 			return 10
