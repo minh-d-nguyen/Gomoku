@@ -64,7 +64,7 @@ class gomokuDefAI:
 		def_two_bonus = 30
 		def_three = 40
 		def_three_bonus = 70
-		def_four = 240
+		def_four = 320
 		def_mid = 25
 		def_mid_bonus = 25
 		def_four_mid = 60
