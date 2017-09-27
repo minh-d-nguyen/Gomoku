@@ -23,35 +23,64 @@ class GomokuBoard():
 
 		def check_cell(board, size, row, col):
 
+			# # Check the row
+			# if (col <= size - 5):
+			# 	if (board[row][col + 1] == board[row][col] and
+			# 		board[row][col + 2] == board[row][col] and
+			# 		board[row][col + 3] == board[row][col] and
+			# 		board[row][col + 4] == board[row][col]):
+			# 		return board[row][col];
+
+			# # Check the column
+			# if (row <= size - 5):
+			# 	if (board[row + 1][col] == board[row][col] and
+			# 		board[row + 2][col] == board[row][col] and
+			# 		board[row + 3][col] == board[row][col] and
+			# 		board[row + 4][col] == board[row][col]):
+			# 		return board[row][col]
+
+			# # Check the diagonals
+			# if (row <= size - 5 and col <= size - 5):
+			# 	if (board[row + 1][col + 1] == board[row][col] and
+			# 		board[row + 2][col + 2] == board[row][col] and
+			# 		board[row + 3][col + 3] == board[row][col] and
+			# 		board[row + 4][col + 4] == board[row][col]):
+			# 		return board[row][col]
+
+			# if (row <= size - 5 and col >= 4):
+			# 	if (board[row + 1][col - 1] == board[row][col] and
+			# 		board[row + 2][col - 2] == board[row][col] and
+			# 		board[row + 3][col - 3] == board[row][col] and
+			# 		board[row + 4][col - 4] == board[row][col]):
+			# 		return board[row][col]
+
+			# return 0	
+
 			# Check the row
-			if (col <= size - 5):
+			if (col <= size - 4):
 				if (board[row][col + 1] == board[row][col] and
 					board[row][col + 2] == board[row][col] and
-					board[row][col + 3] == board[row][col] and
-					board[row][col + 4] == board[row][col]):
+					board[row][col + 3] == board[row][col]):
 					return board[row][col];
 
 			# Check the column
-			if (row <= size - 5):
+			if (row <= size - 4):
 				if (board[row + 1][col] == board[row][col] and
 					board[row + 2][col] == board[row][col] and
-					board[row + 3][col] == board[row][col] and
-					board[row + 4][col] == board[row][col]):
+					board[row + 3][col] == board[row][col]):
 					return board[row][col]
 
 			# Check the diagonals
-			if (row <= size - 5 and col <= size - 5):
+			if (row <= size - 4 and col <= size - 4):
 				if (board[row + 1][col + 1] == board[row][col] and
 					board[row + 2][col + 2] == board[row][col] and
-					board[row + 3][col + 3] == board[row][col] and
-					board[row + 4][col + 4] == board[row][col]):
+					board[row + 3][col + 3] == board[row][col]):
 					return board[row][col]
 
-			if (row <= size - 5 and col >= 4):
+			if (row <= size - 4 and col >= 4):
 				if (board[row + 1][col - 1] == board[row][col] and
 					board[row + 2][col - 2] == board[row][col] and
-					board[row + 3][col - 3] == board[row][col] and
-					board[row + 4][col - 4] == board[row][col]):
+					board[row + 3][col - 3] == board[row][col]):
 					return board[row][col]
 
 			return 0	

@@ -2,7 +2,7 @@ from __future__ import print_function
 from gomokuBoard import GomokuBoard
 from gomokuMinimaxAI import gomokuMinimaxAI
 
-board = GomokuBoard(6)
+board = GomokuBoard(5)
 
 x = gomokuMinimaxAI(-1, board)
 y = gomokuMinimaxAI(1, board)
