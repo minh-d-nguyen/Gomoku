@@ -20,7 +20,7 @@ class GomokuUI(QMainWindow):
         self.board_dim = 25
         self.setGeometry(50,50,20*self.board_dim,20*self.board_dim)
         self.board = GomokuBoard(self.board_dim)
-        self.AI = None
+        self.AI = gomokuDefAI(-1, self.board)
         self.player_num = 0
 
         self.winner = ''

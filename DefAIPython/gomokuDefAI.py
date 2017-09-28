@@ -60,7 +60,7 @@ class gomokuDefAI:
 		curr_score = 0
 		def_one = 1
 		def_one_bonus = 7
-		def_two = 20
+		def_two = 25
 		def_two_bonus = 30
 		def_three = 40
 		def_three_bonus = 70
@@ -480,7 +480,7 @@ class gomokuDefAI:
 		off_two_bonus = 26
 		off_three = 46
 		off_three_bonus = 90
-		off_four = 300
+		off_four = 350
 		off_mid = 5
 		off_mid_bonus = 25
 		off_four_mid = 60
